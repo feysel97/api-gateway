@@ -16,3 +16,7 @@ spring:
           uri: http://localhost:8082
           predicates:
             - Path=/api/v1/users/**
+
+jwt:
+  # Ensure this matches your Auth Service secret key (Must be at least 256 bits / 32 bytes)
+  secret: your_super_secret_256_bit_minimum_length_key_here_at_least_32_bytes
