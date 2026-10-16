@@ -61,13 +61,20 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
 
         // 4. Extract claims and forward headers downstream
         Claims claims = jwtUtils.extractAllClaims(token);
-        String userEmail = claims.getSubject();
+        String username = claims.getSubject();
+        String userEmail = claims.get("email", String.class);
+
         Object userIdObj = claims.get("userId");
         String userId = userIdObj != null ? String.valueOf(userIdObj) : "";
 
+        // Extract roles (JwtService sets it as a List<String>)
+        List<?> roles = claims.get("roles", List.class);
+        String rolesString = roles != null ? String.join(",", roles.stream().map(Object::toString).toList()) : "";
+
         ServerHttpRequest mutatedRequest = request.mutate()
-                .header("X-User-Email", userEmail)
+                .header("X-User-Email", userEmail != null ? userEmail : "")
                 .header("X-User-Id", userId)
+                .header("X-User-Roles", rolesString) // Inject roles header
                 .build();
 
         return chain.filter(exchange.mutate().request(mutatedRequest).build());

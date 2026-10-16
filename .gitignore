@@ -35,3 +35,13 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Mac OS ###
+.DS_Store
+
+### Environment Variables ###
+.env
+
+### Spring Boot Configs ###
+src/main/resources/application.yaml
+src/main/resources/application.properties
