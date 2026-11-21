@@ -6,11 +6,12 @@ This reactive gateway handles intelligent request routing, global CORS configura
 
 ## 🚀 Key Features
 
-* **Reactive Routing:** Built on Spring WebFlux for non-blocking, high-throughput request proxying.
+* **Reactive Routing & Service Discovery:** Built on Spring WebFlux and integrated with Netflix Eureka (`lb://`) for dynamic, non-blocking request proxying.
 * **Global JWT Validation:** A custom `GlobalFilter` intercepts all protected routes, verifies the JWT signature against the shared secret, and checks token expiration.
 * **Secure Header Injection:** Extracts claims from the validated JWT (email, ID, roles) and injects them as trusted HTTP headers (`X-User-Email`, `X-User-Id`, `X-User-Roles`) for downstream services to consume.
 * **Public Route Bypassing:** Explicitly configured bypass lists to allow traffic to authentication and registration endpoints without token evaluation.
 * **Centralized CORS Management:** Handles Cross-Origin Resource Sharing globally so downstream services do not need independent CORS configurations.
+* **Request Tracking & Logging:** Custom `LoggingAndTrackingFilter` assigns a unique UUID to every request and logs HTTP status codes and execution latency.
 
 ## 🛠️ Tech Stack
 
